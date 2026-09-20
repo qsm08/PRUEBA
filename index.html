@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#1cb0f6">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <title>EnglishMaster - Aprende Inglés</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%231cb0f6'/%3E%3Ctext x='50' y='70' font-size='60' text-anchor='middle' fill='white' font-family='Arial'%3E🇬🇧%3C/text%3E%3C/svg%3E">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%231cb0f6'/%3E%3Ctext x='50' y='70' font-size='60' text-anchor='middle' fill='white' font-family='Arial'%3E🇬🇧%3C/text%3E%3C/svg%3E">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Pantalla de Bienvenida -->
+        <div id="welcomeScreen" class="screen active">
+            <div class="welcome-hero">
+                <div class="welcome-icon">🇬🇧</div>
+                <h1>EnglishMaster</h1>
+                <p class="welcome-subtitle">Aprende inglés sin anuncios, de forma visual y progresiva.</p>
+            </div>
+
+            <div class="welcome-stats">
+                <div class="stat-card">
+                    <div class="stat-value" id="totalWords">0</div>
+                    <div class="stat-label">Palabras</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">5</div>
+                    <div class="stat-label">Niveles</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">0</div>
+                    <div class="stat-label">Días de racha</div>
+                </div>
+            </div>
+
+            <div class="welcome-features">
+                <h3>✨ Técnicas de aprendizaje integradas</h3>
+                <ul>
+                    <li>Repetición Espaciada (SRS)</li>
+                    <li>Recuperación Activa</li>
+                    <li>Gamificación sin anuncios</li>
+                </ul>
+            </div>
+
+            <button id="startBtn" class="btn-primary">Comenzar a aprender</button>
+            <p class="welcome-note">✓ Sin anuncios • 100% Offline • Progresión A1 → C2</p>
+        </div>
+
+        <!-- Pantalla de Niveles -->
+        <div id="levelsScreen" class="screen">
+            <div class="screen-header">
+                <button id="backLevelsBtn" class="btn-icon">←</button>
+                <h2>Elige tu nivel</h2>
+                <div class="streak-badge">🔥 <span id="headerStreak">0</span></div>
+            </div>
+
+            <div class="levels-grid" id="levelsGrid"></div>
+
+            <div class="progress-summary">
+                <div class="progress-item">
+                    <span>Progreso total:</span>
+                    <div class="mini-bar"><div id="globalProgress" class="mini-fill" style="width:0%"></div></div>
+                    <span id="globalPercent">0%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pantalla de Lección -->
+        <div id="lessonScreen" class="screen">
+            <div class="screen-header">
+                <button id="backLessonBtn" class="btn-icon">←</button>
+                <h2 id="lessonTitle">Lección</h2>
+                <div class="streak-badge">🔥 <span id="lessonStreak">0</span></div>
+            </div>
+
+            <div class="progress-bar">
+                <div id="lessonProgress" class="progress-fill" style="width:0%"></div>
+            </div>
+
+            <div class="lesson-container">
+                <div class="instruction-card" id="instructionCard">
+                    <p id="instructionText">Traduce esta palabra al español</p>
+                </div>
+
+                <div class="word-card" id="wordCard">
+                    <span id="wordDisplay">Hello</span>
+                </div>
+
+                <div class="options-grid" id="optionsGrid">
+                    <!-- Opciones se generan dinámicamente -->
+                </div>
+
+                <div class="feedback-area" id="feedbackArea">
+                    <!-- Feedback se muestra aquí -->
+                </div>
+
+                <div class="lesson-actions">
+                    <button id="nextWordBtn" class="btn-primary" disabled>Siguiente</button>
+                    <button id="skipLessonBtn" class="btn-secondary">Saltar lección</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pantalla de Completado -->
+        <div id="completedScreen" class="screen">
+            <div class="completed-hero">
+                <div class="completed-icon">🎉</div>
+                <h2 id="completedTitle">¡Lección completada!</h2>
+                <p id="completedMessage">Has aprendido <span id="completedWords">0</span> palabras.</p>
+            </div>
+
+            <div class="completed-stats">
+                <div class="stat-card">
+                    <div class="stat-value" id="completedScore">0</div>
+                    <div class="stat-label">Puntos</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="completedStreak">0</div>
+                    <div class="stat-label">Racha</div>
+                </div>
+            </div>
+
+            <div class="completed-actions">
+                <button id="continueBtn" class="btn-primary">Continuar</button>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <span>🇬🇧 EnglishMaster</span>
+            <span>•</span>
+            <span>Sin anuncios</span>
+            <span>•</span>
+            <span>100% Offline</span>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
